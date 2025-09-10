@@ -1,3 +1,6 @@
+//Hakusessa todennäköisesti 3 pistettä, ei ole vielä töiden takia ehtinyt kunnolla tekemään kouluhommia
+//Lisäilen ominasuuksia kuhan ehdin
+
 #include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/device.h>
