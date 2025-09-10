@@ -1,48 +1,132 @@
-/*
- * Copyright (c) 2016 Intel Corporation
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
-#include <stdio.h>
 #include <zephyr/kernel.h>
+#include <zephyr/sys/printk.h>
+#include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 
-/* 1000 msec = 1 sec */
-#define SLEEP_TIME_MS   1000
+// Led pin configurations
+static const struct gpio_dt_spec red = GPIO_DT_SPEC_GET(DT_ALIAS(led0), gpios);
+static const struct gpio_dt_spec green = GPIO_DT_SPEC_GET(DT_ALIAS(led1), gpios);
+static const struct gpio_dt_spec blue = GPIO_DT_SPEC_GET(DT_ALIAS(led2), gpios);
 
-/* The devicetree node identifier for the "led0" alias. */
-#define LED0_NODE DT_ALIAS(led0)
+// Red led thread initialization
+#define STACKSIZE 500
+#define PRIORITY 5
+void valo_ledit(void *, void *, void*);
+K_THREAD_DEFINE(led_thread, STACKSIZE, valo_ledit, NULL, NULL, NULL, PRIORITY, 0, 0);
 
-/*
- * A build error on this line means your board is unsupported.
- * See the sample documentation for information on how to fix this.
- */
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+//functions split
+int init_led(void);
+void red_led_on(void);
+void red_led_off(void);
+void yellow_led_on(void);
+void yellow_led_off(void);
+void green_led_on(void);
+void green_led_off(void);
 
+// Main program
 int main(void)
 {
-	int ret;
-	bool led_state = true;
+    int ret = init_led();
+    if (ret < 0) {
+        printk("LED initialization failed\n");
+        return ret;
+    }
+    
+    printk("LED state machine started\n");
+    return 0;
+}
 
-	if (!gpio_is_ready_dt(&led)) {
-		return 0;
-	}
+// Initialize leds
+int init_led(void) 
+{
+    int ret;
+    
+    // Initialize red LED
+    ret = gpio_pin_configure_dt(&red, GPIO_OUTPUT_ACTIVE);
+    if (ret < 0) {
+        printk("Error: Red LED configure failed\n");        
+        return ret;
+    }
+    gpio_pin_set_dt(&red, 0);
+    
+    // Initialize green LED
+    ret = gpio_pin_configure_dt(&green, GPIO_OUTPUT_ACTIVE);
+    if (ret < 0) {
+        printk("Error: Green LED configure failed\n");        
+        return ret;
+    }
+    gpio_pin_set_dt(&green, 0);
+    
+    // Initialize blue LED (optional, for future use)
+    ret = gpio_pin_configure_dt(&blue, GPIO_OUTPUT_ACTIVE);
+    if (ret < 0) {
+        printk("Error: Blue LED configure failed\n");        
+        return ret;
+    }
+    gpio_pin_set_dt(&blue, 0);
+    
+    return 0;
+}
 
-	ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
-	if (ret < 0) {
-		return 0;
-	}
+void valo_ledit(void *arg1, void *arg2, void *arg3) 
+{
+    printk("LED state machine thread started\n");
+    
+    while (true) {
+        // State 1: Red LED
+        red_led_on();
+        k_sleep(K_SECONDS(1));
+        red_led_off();
+        
+        // State 2: Yellow LED (Red + Green)
+        yellow_led_on();
+        k_sleep(K_SECONDS(1));
+        yellow_led_off();
+        
+        // State 3: Green LED
+        green_led_on();
+        k_sleep(K_SECONDS(1));
+        green_led_off();
+        //repeat
+}
+}
 
-	while (1) {
-		ret = gpio_pin_toggle_dt(&led);
-		if (ret < 0) {
-			return 0;
-		}
+void red_led_on(void) 
+{
+    gpio_pin_set_dt(&red, 1);
+    printk("Red ON (State 1)\n");
+}
 
-		led_state = !led_state;
-		printf("LED state: %s\n", led_state ? "ON" : "OFF");
-		k_msleep(SLEEP_TIME_MS);
-	}
-	return 0;
+void red_led_off(void) 
+{
+    gpio_pin_set_dt(&red, 0);
+    printk("Red OFF\n");
+}
+
+// Yellow LED functions (Red + Green)
+void yellow_led_on(void) 
+{
+    gpio_pin_set_dt(&red, 1);
+    gpio_pin_set_dt(&green, 1);
+    printk("Yellow ON (State 2) - Red + Green\n");
+}
+
+void yellow_led_off(void) 
+{
+    gpio_pin_set_dt(&red, 0);
+    gpio_pin_set_dt(&green, 0);
+    printk("Yellow OFF\n");
+}
+
+// Green LED functions
+void green_led_on(void) 
+{
+    gpio_pin_set_dt(&green, 1);
+    printk("Green ON (State 3)\n");
+}
+
+void green_led_off(void) 
+{
+    gpio_pin_set_dt(&green, 0);
+    printk("Green OFF\n");
 }
