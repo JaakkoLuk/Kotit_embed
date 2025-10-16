@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.13.7 on win32)" generated="2025-10-16T14:30:08.509551" rpa="false" schemaversion="5">
+<suite id="s1" name="Test Connection" source="C:\Users\jaakk\desktop\test_connection.robot">
+<test id="s1-t1" name="Connect Serial" line="16">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Connecting to ${BOARD} on ${COM}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:08.560696" elapsed="0.000403"/>
+</kw>
+<kw name="Add Port" owner="SerialLibrary">
+<arg>${COM}</arg>
+<arg>baudrate=${BAUD}</arg>
+<arg>encoding=ascii</arg>
+<doc>Adds new port with specified locator.</doc>
+<status status="PASS" start="2025-10-16T14:30:08.561381" elapsed="0.003137"/>
+</kw>
+<kw name="Port Should Be Open" owner="SerialLibrary">
+<arg>${COM}</arg>
+<doc>Fails if specified port is closed.</doc>
+<status status="PASS" start="2025-10-16T14:30:08.564755" elapsed="0.000181"/>
+</kw>
+<kw name="Reset Input Buffer" owner="SerialLibrary">
+<doc>Clears input buffer.</doc>
+<status status="PASS" start="2025-10-16T14:30:08.565127" elapsed="0.000131"/>
+</kw>
+<kw name="Reset Output Buffer" owner="SerialLibrary">
+<doc>Clears outout buffer.</doc>
+<status status="PASS" start="2025-10-16T14:30:08.565446" elapsed="0.000112"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-10-16T14:30:10.566336" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-10-16T14:30:08.565727" elapsed="2.000835"/>
+</kw>
+<status status="PASS" start="2025-10-16T14:30:08.559795" elapsed="2.008196"/>
+</test>
+<test id="s1-t2" name="Test Valid Time String 000120" line="24">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:10.570239" elapsed="0.000960"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:10.571451" elapsed="0.000463"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:11.603758" level="INFO">${response} = 80X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:10.572073" elapsed="1.031776"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:11.604458" level="INFO">${response} = 80</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.604133" elapsed="0.000362"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:11.604841" level="INFO">${response} = 80</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.604637" elapsed="0.000236"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.605050" elapsed="0.000634"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:11.605819" elapsed="0.000100"/>
+</return>
+<msg time="2025-10-16T14:30:11.606205" level="INFO">${result} = 80</msg>
+<var>${result}</var>
+<arg>000120</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:10.569763" elapsed="1.036483"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>80</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.607725" elapsed="0.000351"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Valid time 000120 returned ${result} seconds</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.608492" elapsed="0.000411"/>
+</kw>
+<doc>Test 1 minute 20 seconds = 80 seconds total</doc>
+<status status="PASS" start="2025-10-16T14:30:10.568848" elapsed="1.040354"/>
+</test>
+<test id="s1-t3" name="Test Valid Time String 000005" line="30">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.610824" elapsed="0.000800"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.611805" elapsed="0.000294"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:12.636125" level="INFO">${response} = 5X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:11.612282" elapsed="1.023926"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:12.636806" level="INFO">${response} = 5</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.636463" elapsed="0.000379"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:12.637187" level="INFO">${response} = 5</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.636984" elapsed="0.000235"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.637346" elapsed="0.000518"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:12.637987" elapsed="0.000091"/>
+</return>
+<msg time="2025-10-16T14:30:12.638362" level="INFO">${result} = 5</msg>
+<var>${result}</var>
+<arg>000005</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:11.610435" elapsed="1.027971"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>5</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.639621" elapsed="0.000324"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Valid time 000005 returned ${result} seconds</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.640341" elapsed="0.000428"/>
+</kw>
+<doc>Test 5 seconds</doc>
+<status status="PASS" start="2025-10-16T14:30:11.609751" elapsed="1.031300"/>
+</test>
+<test id="s1-t4" name="Test Valid Time String 010203" line="36">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.643064" elapsed="0.000729"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.643977" elapsed="0.000318"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:13.663798" level="INFO">${response} = 3723X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:12.644545" elapsed="1.019343"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:13.664825" level="INFO">${response} = 3723</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.664510" elapsed="0.000351"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:13.665249" level="INFO">${response} = 3723</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.664999" elapsed="0.000299"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.665439" elapsed="0.000431"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:13.665985" elapsed="0.000066"/>
+</return>
+<msg time="2025-10-16T14:30:13.666317" level="INFO">${result} = 3723</msg>
+<var>${result}</var>
+<arg>010203</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:12.642188" elapsed="1.024165"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>3723</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.667253" elapsed="0.000270"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Valid time 010203 returned ${result} seconds</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.667914" elapsed="0.000364"/>
+</kw>
+<doc>Test 1 hour 2 minutes 3 seconds = 3723 seconds</doc>
+<status status="PASS" start="2025-10-16T14:30:12.641533" elapsed="1.027014"/>
+</test>
+<test id="s1-t5" name="Test Invalid Time String Too Short" line="42">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.669973" elapsed="0.000775"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.670936" elapsed="0.000324"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:14.694000" level="INFO">${response} = -1X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:13.671419" elapsed="1.022661"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:14.694845" level="INFO">${response} = -1</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.694453" elapsed="0.000438"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:14.695263" level="INFO">${response} = -1</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.695049" elapsed="0.000248"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.695441" elapsed="0.000431"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:14.696000" elapsed="0.000074"/>
+</return>
+<msg time="2025-10-16T14:30:14.696315" level="INFO">${result} = -1</msg>
+<var>${result}</var>
+<arg>00012</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:13.669649" elapsed="1.026703"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>${ERROR_LEN}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.697034" elapsed="0.000325"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Short string returned error ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.697741" elapsed="0.000424"/>
+</kw>
+<doc>String must be exactly 6 characters</doc>
+<status status="PASS" start="2025-10-16T14:30:13.669024" elapsed="1.029423"/>
+</test>
+<test id="s1-t6" name="Test Invalid Time String Too Long" line="48">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.699992" elapsed="0.000769"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.700950" elapsed="0.000313"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:15.727439" level="INFO">${response} = -1X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:14.701554" elapsed="1.025972"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:15.728104" level="INFO">${response} = -1</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.727800" elapsed="0.000339"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:15.728462" level="INFO">${response} = -1</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.728273" elapsed="0.000219"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.728628" elapsed="0.000616"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:15.729363" elapsed="0.000073"/>
+</return>
+<msg time="2025-10-16T14:30:15.729660" level="INFO">${result} = -1</msg>
+<var>${result}</var>
+<arg>0001200</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:14.699654" elapsed="1.030059"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>${ERROR_LEN}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.730562" elapsed="0.000315"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Long string returned error ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.731324" elapsed="0.000476"/>
+</kw>
+<doc>String must be exactly 6 characters</doc>
+<status status="PASS" start="2025-10-16T14:30:14.698985" elapsed="1.033075"/>
+</test>
+<test id="s1-t7" name="Test Invalid Time String With Letters" line="54">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.733523" elapsed="0.000810"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.734710" elapsed="0.000306"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:16.756178" level="INFO">${response} = -1X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:15.735206" elapsed="1.021091"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:16.756920" level="INFO">${response} = -1</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.756598" elapsed="0.000358"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:16.757308" level="INFO">${response} = -1</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.757092" elapsed="0.000260"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.757513" elapsed="0.000600"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:16.758237" elapsed="0.000073"/>
+</return>
+<msg time="2025-10-16T14:30:16.758586" level="INFO">${result} = -1</msg>
+<var>${result}</var>
+<arg>00A120</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:15.733182" elapsed="1.025450"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>${ERROR_LEN}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.759509" elapsed="0.000310"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>String with letters returned error ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.760236" elapsed="0.000436"/>
+</kw>
+<doc>String must contain only digits</doc>
+<status status="PASS" start="2025-10-16T14:30:15.732544" elapsed="1.028393"/>
+</test>
+<test id="s1-t8" name="Test Invalid Time String 67 Seconds" line="60">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.762451" elapsed="0.000810"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.763437" elapsed="0.000291"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:17.782291" level="INFO">${response} = -3X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:16.763890" elapsed="1.018471"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:17.782812" level="INFO">${response} = -3</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.782577" elapsed="0.000278"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:17.783100" level="INFO">${response} = -3</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.782955" elapsed="0.000167"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.783206" elapsed="0.000476"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:17.783736" elapsed="0.000046"/>
+</return>
+<msg time="2025-10-16T14:30:17.783912" level="INFO">${result} = -3</msg>
+<var>${result}</var>
+<arg>001067</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:16.762074" elapsed="1.021859"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>${ERROR_VALUE}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.784365" elapsed="0.000482"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>67 seconds returned error ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.785108" elapsed="0.000234"/>
+</kw>
+<doc>Seconds cannot be more than 59</doc>
+<status status="PASS" start="2025-10-16T14:30:16.761426" elapsed="1.024099"/>
+</test>
+<test id="s1-t9" name="Test Invalid Time String 60 Minutes" line="66">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.786917" elapsed="0.000582"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.787693" elapsed="0.000284"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:18.807723" level="INFO">${response} = -3X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:17.788095" elapsed="1.019719"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:18.808475" level="INFO">${response} = -3</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.808116" elapsed="0.000398"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:18.808890" level="INFO">${response} = -3</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.808666" elapsed="0.000257"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.809051" elapsed="0.000432"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:18.809602" elapsed="0.000082"/>
+</return>
+<msg time="2025-10-16T14:30:18.809968" level="INFO">${result} = -3</msg>
+<var>${result}</var>
+<arg>006005</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:17.786525" elapsed="1.023487"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>${ERROR_VALUE}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.810738" elapsed="0.000325"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>60 minutes returned error ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.811581" elapsed="0.000512"/>
+</kw>
+<doc>Minutes cannot be 60 or more</doc>
+<status status="PASS" start="2025-10-16T14:30:17.785913" elapsed="1.026566"/>
+</test>
+<test id="s1-t10" name="Test Invalid Time String 24 Hours" line="72">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.814018" elapsed="0.000808"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.814986" elapsed="0.000292"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:19.834821" level="INFO">${response} = -3X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:18.815474" elapsed="1.019444"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:19.835556" level="INFO">${response} = -3</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.835214" elapsed="0.000380"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:19.835956" level="INFO">${response} = -3</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.835740" elapsed="0.000270"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.836178" elapsed="0.000559"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:19.836867" elapsed="0.000087"/>
+</return>
+<msg time="2025-10-16T14:30:19.837265" level="INFO">${result} = -3</msg>
+<var>${result}</var>
+<arg>240000</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:18.813670" elapsed="1.023634"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>${ERROR_VALUE}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.838355" elapsed="0.000314"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>24 hours returned error ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.839090" elapsed="0.000855"/>
+</kw>
+<doc>Hours cannot be 24 or more</doc>
+<status status="PASS" start="2025-10-16T14:30:18.813026" elapsed="1.027359"/>
+</test>
+<test id="s1-t11" name="Test Time String Zero Seconds" line="78">
+<kw name="Send Time String And Get Response">
+<kw name="Write Data" owner="SerialLibrary">
+<arg>T${time_string}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.842033" elapsed="0.000859"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent: T${time_string}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.843104" elapsed="0.000393"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:20.867506" level="INFO">${response} = 0X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:19.843689" elapsed="1.023911"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:20.868273" level="INFO">${response} = 0</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.867914" elapsed="0.000398"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:20.868669" level="INFO">${response} = 0</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.868456" elapsed="0.000254"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.868897" elapsed="0.000641"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:20.869655" elapsed="0.000072"/>
+</return>
+<msg time="2025-10-16T14:30:20.869954" level="INFO">${result} = 0</msg>
+<var>${result}</var>
+<arg>000000</arg>
+<doc>Send time string prefixed with T and get parsed result</doc>
+<status status="PASS" start="2025-10-16T14:30:19.841651" elapsed="1.028341"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.870958" elapsed="0.000304"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Zero seconds returned ${result}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.871708" elapsed="0.000511"/>
+</kw>
+<doc>Zero seconds should return 0 (valid but useless for timer)</doc>
+<status status="PASS" start="2025-10-16T14:30:19.840929" elapsed="1.031605"/>
+</test>
+<test id="s1-t12" name="Test Valid Sequence RYG" line="85">
+<kw name="Send Sequence And Get Response">
+<kw name="Reset Input Buffer" owner="SerialLibrary">
+<doc>Clears input buffer.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.875023" elapsed="0.000215"/>
+</kw>
+<kw name="Write Data" owner="SerialLibrary">
+<arg>S${sequence}${TERMINATOR}</arg>
+<arg>encoding=ascii</arg>
+<doc>Writes data into the port.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.875622" elapsed="0.000886"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Sent sequence: ${sequence}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.876692" elapsed="0.000338"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-10-16T14:30:20.977986" level="INFO">Slept 100 milliseconds.</msg>
+<arg>0.1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.877202" elapsed="0.101018"/>
+</kw>
+<kw name="Read Until" owner="SerialLibrary">
+<msg time="2025-10-16T14:30:22.003145" level="INFO">${response} = 0X</msg>
+<var>${response}</var>
+<arg>terminator=88</arg>
+<arg>encoding=ascii</arg>
+<arg>timeout=${TIMEOUT}</arg>
+<doc>Read until a termination sequence is found, size exceeded or timeout.</doc>
+<status status="PASS" start="2025-10-16T14:30:20.978517" elapsed="1.024734"/>
+</kw>
+<kw name="Remove String" owner="String">
+<msg time="2025-10-16T14:30:22.008628" level="INFO">${response} = 0</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<arg>${TERMINATOR}</arg>
+<doc>Removes all ``removables`` from the given ``string``.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.003565" elapsed="0.005119"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2025-10-16T14:30:22.009118" level="INFO">${response} = 0</msg>
+<var>${response}</var>
+<arg>${response}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.008866" elapsed="0.000289"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Received: ${response}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.009290" elapsed="0.000533"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2025-10-16T14:30:22.010191" elapsed="0.000073"/>
+</return>
+<msg time="2025-10-16T14:30:22.010501" level="INFO">${result} = 0</msg>
+<var>${result}</var>
+<arg>RYG</arg>
+<doc>Send LED sequence and get validation result</doc>
+<status status="PASS" start="2025-10-16T14:30:20.874505" elapsed="1.136038"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.011220" elapsed="0.000279"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Valid sequence RYG accepted</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.011946" elapsed="0.000369"/>
+</kw>
+<doc>Valid 3-character sequence</doc>
+<status status="PASS" start="2025-10-16T14:30:20.873666" elapsed="1.138944"/>
+</test>
+<test id="s1-t13" name="Disconnect Serial" line="92">
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Disconnecting from ${BOARD}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.013574" elapsed="0.000322"/>
+</kw>
+<kw name="Delete Port" owner="SerialLibrary" type="TEARDOWN">
+<arg>${COM}</arg>
+<doc>Deletes specified port.</doc>
+<status status="PASS" start="2025-10-16T14:30:22.014242" elapsed="0.003329"/>
+</kw>
+<status status="PASS" start="2025-10-16T14:30:22.013125" elapsed="0.004657"/>
+</test>
+<status status="PASS" start="2025-10-16T14:30:08.511242" elapsed="13.507487"/>
+</suite>
+<statistics>
+<total>
+<stat pass="13" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test Connection" id="s1" pass="13" fail="0" skip="0">Test Connection</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
